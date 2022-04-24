@@ -10,5 +10,6 @@
 // import useForm from './useForm';
 import theme, {COLORS, SIZES, FONTS} from './them';
 export * from './useForm';
+export * from './data';
 
 export {theme, COLORS, SIZES, FONTS};

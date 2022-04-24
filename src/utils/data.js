@@ -197,3 +197,182 @@ export const data = [
       ],
     },
   ]
+
+export const dataMonth = [
+    {
+      name: 'Januari',
+      value: 'Januari',
+    },
+    {
+      name: 'Februari',
+      value: 'Februari',
+    },
+    {
+      name: 'Maret',
+      value: 'Maret',
+    },
+    {
+      name: 'April',
+      value: 'April',
+    },
+    {
+      name: 'Mei',
+      value: 'Mei',
+    },
+    {
+      name: 'Juni',
+      value: 'Juni',
+    },
+    {
+      name: 'Juli',
+      value: 'Juli',
+    },
+    {
+      name: 'Agustus',
+      value: 'Agustus',
+    },
+    {
+      name: 'September',
+      value: 'September',
+    },
+    {
+      name: 'Oktober',
+      value: 'Oktober',
+    },
+    {
+      name: 'November',
+      value: 'November',
+    },
+    {
+      name: 'Desember',
+      value: 'Desember',
+    },
+]
+
+export const dataDay = [
+  {
+    name: 'Senin',
+    value: 'Senin',
+  },
+  {
+    name: 'Selasa',
+    value: 'Selasa',
+  },
+  {
+    name: 'Rabu',
+    value: 'Rabu',
+  },
+  {
+    name: 'Kamis',
+    value: 'Kamis',
+  },
+  {
+    name: 'Jumat',
+    value: 'Jumat',
+  },
+  {
+    name: 'Sabtu',
+    value: 'Sabtu',
+  },
+  {
+    name: 'Minggu',
+    value: 'Minggu',
+  },  
+]
+
+export const menuData = [
+  {
+    title: 'Reguler 1',
+    range: 'Rp 80.000 - Rp 110.000',
+    data: [
+      // {key: null, value: null},
+      {key: '07:00', value: 'booked', price: 80000},
+      {key: '08:00', value: false, price: 80000},
+      {key: '09:00', value: false, price: 80000},
+      {key: '10:00', value: false, price: 80000},
+      {key: '11:00', value: false, price: 80000},
+      {key: '12:00', value: false, price: 80000},
+      // {key: '13:00', value: false, price: 80000},
+      // {key: '14:00', value: false, price: 80000},
+      // {key: '15:00', value: 'booked', price: 80000},
+      // {key: '16:00', value: false, price: 80000},
+      // {key: '17:00', value: false, price: 80000},
+      // {key: '18:00', value: false, price: 80000},
+      // {key: '19:00', value: false, price: 110000},
+      // {key: '20:00', value: false, price: 110000},
+      // {key: null, value: null},
+    ],
+  },
+  {
+    title: 'Reguler II',
+    range: 'Rp 70.000 - Rp 100.000',
+    data: [
+      {key: '07:00', value: 'booked', price: 70000},
+      {key: '08:00', value: 'booked', price: 70000},
+      {key: '09:00', value: false, price: 70000},
+      {key: '10:00', value: false, price: 70000},
+      {key: '11:00', value: false, price: 70000},
+      {key: '12:00', value: false, price: 70000},
+      // {key: '13:00', value: false, price: 70000},
+      // {key: '14:00', value: false, price: 70000},
+      // {key: '15:00', value: false, price: 70000},
+      // {key: '16:00', value: false, price: 70000},
+      // {key: '17:00', value: false, price: 70000},
+      // {key: '18:00', value: false, price: 70000},
+      // {key: '19:00', value: false, price: 70000},
+      // {key: '20:00', value: false, price: 70000},
+      // {key: '21:00', value: false, price: 100000},
+      // {key: '22:00', value: false, price: 100000},
+      // {key: '23:00', value: false, price: 100000},
+      // {key: '24:00', value: false, price: 100000},
+    ],
+  },
+  {
+    title: 'Reguler III',
+    range: 'Rp 120.000 - Rp 150.000',
+    data: [
+      {key: '07:00', value: false, price: 120000},
+      {key: '08:00', value: false, price: 120000},
+      {key: '09:00', value: false, price: 120000},
+      {key: '10:00', value: false, price: 120000},
+      {key: '11:00', value: false, price: 120000},
+      {key: '12:00', value: false, price: 120000},
+      {key: '13:00', value: false, price: 120000},
+      {key: '14:00', value: false, price: 120000},
+      {key: '15:00', value: false, price: 120000},
+      {key: '16:00', value: false, price: 120000},
+      {key: '17:00', value: false, price: 120000},
+      {key: '18:00', value: false, price: 120000},
+      {key: '19:00', value: false, price: 120000},
+      {key: '20:00', value: false, price: 120000},
+      {key: '21:00', value: false, price: 150000},
+      {key: '22:00', value: false, price: 150000},
+      {key: '23:00', value: false, price: 150000},
+      {key: '24:00', value: false, price: 150000},
+    ],
+  },
+  {
+    title: 'VIP I',
+    range: 'Rp 200.000 - Rp 230.000',
+    data: [
+      {key: '07:00', value: false, price: 200000},
+      {key: '08:00', value: false, price: 200000},
+      {key: '09:00', value: false, price: 200000},
+      {key: '10:00', value: false, price: 200000},
+      {key: '11:00', value: false, price: 200000},
+      {key: '12:00', value: false, price: 200000},
+      {key: '13:00', value: false, price: 200000},
+      {key: '14:00', value: false, price: 200000},
+      {key: '15:00', value: false, price: 200000},
+      {key: '16:00', value: false, price: 200000},
+      {key: '17:00', value: false, price: 200000},
+      {key: '18:00', value: false, price: 200000},
+      {key: '19:00', value: false, price: 200000},
+      {key: '20:00', value: false, price: 200000},
+      {key: '21:00', value: false, price: 200000},
+      {key: '22:00', value: false, price: 230000},
+      {key: '23:00', value: false, price: 230000},
+      {key: '24:00', value: false, price: 230000},
+    ],
+  },
+]

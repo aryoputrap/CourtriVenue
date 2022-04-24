@@ -168,8 +168,6 @@ class DropDownPicker extends React.Component {
   }
 
   componentDidUpdate() {
-    // ScrollView scrollTo() can only be used after the ScrollView is rendered
-    // Automatic scrolling to first defaultValue occurs on first render of dropdown ScrollView
     const item = this.props.items[this.state.defaultValueIndex];
     const isItemVisible =
       item && (typeof item.hidden === 'undefined' || item.hidden === false);

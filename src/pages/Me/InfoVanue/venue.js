@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, TextInput,Image, Dimensions, TouchableOpacity, Modal, FlatList, Alert, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
@@ -22,6 +22,7 @@ import {
     Mosque,
     Hanger,
   } from '../../../asset';
+  import API from '../../../service';
 
 const {width, height} = Dimensions.get('window')
 
@@ -50,216 +51,146 @@ const InfoVanue = ({navigation}) => {
   const [address, setAddress] = React.useState("");
 
   const [time, setTime] = useForm({
-    hari: '',
+    // hari: '',
     buka: '',
-    tutup: ''
+    tutup: '',
+    bukaId: '',
+    tutupId: '',
   })
 
   const [jadwal, setJadwal] = useState([]);
 
   const initialValue = [
         {
-          id: 1,
+          id: "93a7f089-f84b-4d95-b039-3db836518914",
           state: 'lapIndoor',
           value: 'Indoor',
           img: <Field />,
           status: form.lapIndoor,
         },
         {
-          id: 1,
+          id: "93a7f089-f84b-4d95-b039-3db836518915",
           state: 'lapOutdoor',
           value: 'Outdoor',
           img: <Field />,
           status: form.lapOutdoor,
         },
         {
-          id: 2,
+          id: "abff9d9a-dcfb-4222-be37-0ebfcdd6e059",
           state: 'toilet',
           value: 'Toilet',
           img: <Toilet />,
           status: form.toilet,
         },
         {
-          id: 3,
+          id: "93a7f089-f84b-4d95-b039-3db836518916",
           state: 'parkir',
           value: 'Parkir',
           img: <Parking />,
           status: form.parkir,
         },
         {
-          id: 4,
+          id: "93a7f089-f84b-4d95-b039-3db836518917",
           state: 'mushola',
           value: 'Mushola',
           img: <Mosque />,
           status: form.mushola,
         },
         {
-          id: 5,
+          id: "93a7f089-f84b-4d95-b039-3db836518918",
           state: 'kantin',
           value: 'Kantin',
           img: <Canteen />,
           status: form.kantin,
         },
         {
-          id: 6,
+          id: "93a7f089-f84b-4d95-b039-3db836518919",
           state: 'ruang',
           value: 'Ruang Ganti',
           img: <Hanger />,
           status: form.ruang,
         },
       ];
-  const [days, setDays] = useState({
-        data: [
-          {
-            name: 'Senin',
-            value: 'Senin',
-          },
-          {
-            name: 'Selasa',
-            value: 'Selasa',
-          },
-          {
-            name: 'Rabu',
-            value: 'Rabu',
-          },
-          {
-            name: 'Kamis',
-            value: 'Kamis',
-          },
-          {
-            name: 'Jumat',
-            value: 'Jumat',
-          },
-          {
-            name: 'Sabtu',
-            value: 'Sabtu',
-          },
-          {
-            name: 'Minggu',
-            value: 'Minggu',
-          },
-        ],
-      });
-  const [hour, setHour] = useState({
-        data: [
-          {
-            name: '07:00',
-            value: '07:00',
-          },
-          {
-            name: '08:00',
-            value: '08:00',
-          },
-          {
-            name: '09:00',
-            value: '09:00',
-          },
-          {
-            name: '10:00',
-            value: '10:00',
-          },
-          {
-            name: '11:00',
-            value: '11:00',
-          },
-          {
-            name: '12:00',
-            value: '12:00',
-          },
-          {
-            name: '19:00',
-            value: '19:00',
-          },
-          {
-            name: '20:00',
-            value: '20:00',
-          },
-          {
-            name: '21:00',
-            value: '21:00',
-          },
-          {
-            name: '22:00',
-            value: '22:00',
-          },
-          {
-            name: '23:00',
-            value: '23:00',
-          },
-          {
-            name: '24:00',
-            value: '24:00',
-          },
-        ],
-  });
-  const [hour2, setHour2] = useState({
-        data: [
-          {
-            name: '07:00',
-            value: '07:00',
-          },
-          {
-            name: '08:00',
-            value: '08:00',
-          },
-          {
-            name: '09:00',
-            value: '09:00',
-          },
-          {
-            name: '10:00',
-            value: '10:00',
-          },
-          {
-            name: '11:00',
-            value: '11:00',
-          },
-          {
-            name: '12:00',
-            value: '12:00',
-          },
-          {
-            name: '19:00',
-            value: '19:00',
-          },
-          {
-            name: '20:00',
-            value: '20:00',
-          },
-          {
-            name: '21:00',
-            value: '21:00',
-          },
-          {
-            name: '22:00',
-            value: '22:00',
-          },
-          {
-            name: '23:00',
-            value: '23:00',
-          },
-          {
-            name: '24:00',
-            value: '24:00',
-          },
-        ],
-  });
-  const [datalist] = useState(initialValue)
+
+  const [hour, setHour] = useState([{
+    id: '',
+    name: '',
+    value: '',
+  }]);
+
+  // USE EFFECT
+
+  useEffect(() => {
+    getTime();
+  }, []);
+
+  const getTime = async () => {
+    await API.create('TIME').time()
+    .then((res) => {
+      let time = res.data.data;
+      let newData = time.map(item => {
+        let data = {
+          id: item.id,
+          name: item.time,
+          value: item.time
+        }
+
+        return data
+      })
+      // console.log('NewData',newData);
+      setHour(newData);
+    })
+    .catch(error => console.log("Error ", error))
+  }
 
   const saveDays = () => {
-    // let x = []
-    console.log('[JADWAL]', jadwal);
     let data = {
-      id: time.hari,
-      hari: time.hari,
+      // id: time.hari,
+      // hari: time.hari,
       buka: time.buka,
       tutup: time.tutup
     }
-    // const a = jadwal.push(data)
-    setJadwal(jadwal => [...jadwal, data])
-    setModalVisible(!modalVisible);
-    // console.log('SAVE DAYS', a);
+    console.log('[JADWAL]', data);
+    let dataBuka = time.buka;
+    let dataTutup = time.tutup;
+    if(dataTutup <= dataBuka){
+      // setJadwal(jadwal => [...jadwal, data])
+      Alert.alert(
+        "Error",
+        "Anda tidak dapat input lebih dari jam buka",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+      ])
+    }else{
+      setJadwal(jadwal => [...jadwal, data])
+      setModalVisible(!modalVisible);
+    }
   };
+
+  const openModal = () => {
+    let dataJadwal = jadwal.length;
+    if(dataJadwal == 0){
+      setModalVisible(!modalVisible)
+    } else {
+      Alert.alert(
+        "Error",
+        "Anda sudah input waktu",
+        [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ])
+    }
+    
+  }
 
   const sendVenue = () => {
     let data = {
@@ -268,7 +199,9 @@ const InfoVanue = ({navigation}) => {
         "latitude": lat,
         "longitude": long,
         "facilityId": "93a7f089-f84b-4d95-b039-3db836518914,abff9d9a-dcfb-4222-be37-0ebfcdd6e059",
-        "image": resimage64
+        "image": resimage64,
+        "startTimeId": time.bukaId,
+        "endTimeId": time.tutupId,
     }
 
     console.log('[DATA]',data);
@@ -307,10 +240,36 @@ const InfoVanue = ({navigation}) => {
     axios.get(url)
     .then(
       response => 
-      // this.updateLocationCoordinates(response)
       console.log('[RES]', response)
     )
-    .catch(error => console.log("Failjax: ", error))
+    .catch(error => console.log("Error: ", error))
+  }
+
+  const addTime = (item, type, typeId) => {
+    // console.log('ADD TIME', type, item);
+    if(type == 'buka'){
+      setTime(type,item.value) && setTime(typeId, item.id);
+    } else {
+      let timeOpen = parseInt(time.buka);
+      let timeClose = parseInt(item.value);
+      setTime(type,item.value) && setTime(typeId, item.id);
+      if(timeClose <= timeOpen){
+        Alert.alert(
+        "Error",
+        "Anda tidak dapat input lebih dari jam buka",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ])
+      } else {
+        setTime(type,item.value) && setTime(typeId, item.id);
+      }
+    }
+    
   }
 
   const Filter = () => {
@@ -332,7 +291,7 @@ const InfoVanue = ({navigation}) => {
         }}>
           <View style={{
             width: width * 0.95,
-            height: height * 0.29,
+            height: height * 0.35,
             backgroundColor: 'white',
             borderRadius: 7,
             alignSelf: 'center',
@@ -354,39 +313,15 @@ const InfoVanue = ({navigation}) => {
             </View>
             <Gap height={5} />
             <View style={[Default.row, {justifyContent: 'space-between', padding: 10, width: width * 0.9, alignSelf: 'center', alignItems: 'center',marginTop: 10}]}>
-              <View>
-                <Text>Hari</Text>
-                <DropdownData
-                  placeholder={'Hari'}
-                  colortextplace={"red"} 
-                  containerStyle={{width: width * 0.225, height: height * 0.05, marginTop: 10}}
-                  items={days.data}
-                  controller={instance => (controller.current = instance)}
-                  onChangeList={(items, callback) => {
-                    Promise.resolve(setDays(items)).then(() => callback());
-                  }}
-                  // defaultValue={cityid}
-                  // onChangeItem={(e) => setCountry(e.value) && setPhone('')}
-                  searchablePlaceholder={'Hari'}
-                  onChangeItem={item => setTime('hari', item.value)}
-                  // onChangeItem={item => console.log('ini item',item)}
-                />
-              </View>
               <View style={[Default.row, {alignItems: 'center'}]}>
                 <View>
                   <Text>Jam Buka</Text>
                   <DropdownData
                     placeholder={'Buka'}
-                    containerStyle={{width: width * 0.225, height: height * 0.05, marginTop: 10}}
-                    items={hour.data}
+                    containerStyle={{width: width * 0.4, height: height * 0.06, marginTop: 10}}
+                    items={hour}
                     controller={instance => (controller.current = instance)}
-                    onChangeList={(items, callback) => {
-                      Promise.resolve(setHour(items)).then(() => callback());
-                    }}
-                    // defaultValue={cityid}
-                    // onChangeItem={(e) => setCountry(e.value) && setPhone('')}
-                    // searchablePlaceholder={'Cari Courtri Promo'}
-                    onChangeItem={item => setTime('buka',item.value)}
+                    onChangeItem={item => addTime(item, 'buka', 'bukaId')}
                   />
                 </View>
                 <Gap width={10}/>
@@ -396,16 +331,10 @@ const InfoVanue = ({navigation}) => {
                   <Text>Jam Tutup</Text>
                   <DropdownData
                     placeholder={'Tutup'}
-                    containerStyle={{width: width * 0.225, height: height * 0.05, marginTop: 10}}
-                    items={hour.data}
+                    containerStyle={{width: width * 0.4, height: height * 0.06, marginTop: 10}}
+                    items={hour}
                     controller={instance => (controller.current = instance)}
-                    onChangeList={(items, callback) => {
-                        Promise.resolve(setHour(items)).then(() => callback());
-                    }}
-                    // defaultValue={cityid}
-                    // onChangeItem={(e) => setCountry(e.value) && setPhone('')}
-                    // searchablePlaceholder={'Cari Courtri Promo'}
-                    onChangeItem={item => setTime('tutup', item.value)}
+                    onChangeItem={item => addTime(item, 'tutup', 'tutupId')}
                   />
                 </View>
               </View>
@@ -438,7 +367,8 @@ const InfoVanue = ({navigation}) => {
   const renderJadwal = ({item, index}) => (
     <View key={item.hari}>
       <View style={[Default.row, {justifyContent: 'space-between', padding: 10, borderBottomWidth: 0.5, width: width * 0.95, alignSelf: 'center', alignItems: 'center'}]}>
-        <Text>{item.hari}</Text>
+        {/* <Text>{item.hari}</Text> */}
+        <Icon name={'clock'} size={20} color={COLORS.primary}/>
         <View style={[Default.row, {alignItems: 'center'}]}>
           <View>
             <Text>{item.buka}</Text>
@@ -511,14 +441,36 @@ const InfoVanue = ({navigation}) => {
             <View style={{padding: 10}}>
                 <View style={{borderWidth: 1, borderRadius: 5, borderColor: COLORS.greyLight}}>
                     <TextInput
-                        style={{marginLeft: 5}}
-                        placeholder='Nama GOR'
-                        onChangeText={onNamegor}
-                        value={namegor}
+                      style={{marginLeft: 5}}
+                      placeholder='Nama GOR'
+                      onChangeText={onNamegor}
+                      value={namegor}
                     />  
                 </View>
             </View>
         </View>
+        <Gap height={10}/>
+        <View style={[Default.row,{backgroundColor: COLORS.greenpastel, width: width, justifyContent: 'flex-end'}]}>
+          <View>
+            <Text style={[Styles.titleEditVanue, {fontSize: 17}]}>Jadwal</Text>
+          </View>
+          <View style={[Default.center, {width: 50, marginLeft: 110}]}>
+            <TouchableOpacity onPress={() => openModal()}>
+              <Icon2 name={'add-circle'} size={20} color={COLORS.primary} style={{alignSelf: 'center'}}/>
+              <Text style={{fontWeight: 'bold', fontSize: 10, textAlign: 'center'}}>Tambah</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <Gap height={10}/>
+        <FlatList
+          style={{height: height * 0.08, width: width}}
+          data={jadwal}
+          renderItem={renderJadwal}
+          // numColumns={2}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        /> 
         <Gap height={10}/>
         <View>
           <Text style={{paddingLeft: 10, paddingBottom: 10}}>Fasilitas :</Text>
@@ -611,31 +563,6 @@ const InfoVanue = ({navigation}) => {
                 </View>
             </View>
         </View>
-        <Gap height={10}/>
-        <View style={[Default.row,{backgroundColor: COLORS.greenpastel, width: width, justifyContent: 'flex-end'}]}>
-          <View>
-            <Text style={[Styles.titleEditVanue, {fontSize: 17}]}>Jadwal</Text>
-          </View>
-          <View style={[Default.center, {width: 50, marginLeft: 110}]}>
-            <TouchableOpacity 
-            onPress={() => setModalVisible(!modalVisible)}
-            // style={{alignSelf}}
-            >
-              <Icon2 name={'add-circle'} size={20} color={COLORS.primary} style={{alignSelf: 'center'}}/>
-              <Text style={{fontWeight: 'bold', fontSize: 10, textAlign: 'center'}}>Tambah</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Gap height={10}/>
-        <FlatList
-          style={{height: height * 0.5, width: width}}
-          data={jadwal}
-          renderItem={renderJadwal}
-          // numColumns={2}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        /> 
         <Gap height={20}/>
       </ScrollView>
       <Gap height={20}/>

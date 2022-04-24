@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View, TextInput,Image, Dimensions, TouchableOpacity, Modal, FlatList} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Feather';
 import {Header, Gap} from '../../../components';
 import { COLORS } from '../../../utils';
 import {Default, Styles} from '../../styles';
@@ -116,9 +116,9 @@ const InfoVanue = ({navigation}) => {
 
   const renderItem = ({item, index}) => (
     <View key={index} style={{margin: 10}}>
-      <TouchableOpacity
+      <View
         // onPress={() => navigation.navigate('Editvanue')}
-        onPress={() => navigation.navigate('Venue')}
+        // onPress={() => navigation.navigate('Venue')}
         key={item.id}
         style={Styles.cardview}
         // onPress={() =>
@@ -129,7 +129,7 @@ const InfoVanue = ({navigation}) => {
         //   })
         // }
         >
-        <View>
+        <View style={{padding: 15}}>
           <View style={{alignItems: 'center'}}>
             <Image
               source={{
@@ -139,6 +139,7 @@ const InfoVanue = ({navigation}) => {
                 width: width * 0.9,
                 height: height * 0.3,
                 borderRadius: 10,
+                marginTop: 10,
               }}
             />
           </View>
@@ -153,16 +154,14 @@ const InfoVanue = ({navigation}) => {
               </Text>
           </View>
           <Gap height={20} />
-          <View>
-            <View
-              style={{
-                flex: 1,
-                height: height * 0.1,
-                width: width * 0.1,
-                flexWrap: 'wrap',
-                // backgroundColor: 'blue',
-              }}>
-              {item.dataimg.map(itemfas => {
+          <View
+            style={{
+              flex: 1,
+              height: height * 0.1,
+              width: width * 0.1,
+              flexWrap: 'wrap',
+            }}>
+            {item.dataimg.map(itemfas => {
                 return (
                   <View style={{width: width * 0.325}}>
                     {itemfas.status == false ? (
@@ -186,12 +185,29 @@ const InfoVanue = ({navigation}) => {
                     )}
                   </View>
                 );
-              })}
+            })}
+          </View>
+          <Gap height={10}/>
+          <View style={[Default.row, {justifyContent: 'space-between', paddingHorizontal: 17, width: width * 0.95, alignSelf: 'center'}]}>
+            <View style={[Default.row, {justifyContent: 'center', alignContent: 'center', alignItems: 'center'}]}>
+              <Icon name={'clock'} size={20} color={COLORS.primary}/>
+              <Gap width={10} />
+              <Text style={{fontSize: 12}}>Waktu Buka :</Text>
             </View>
+            <Text style={{fontSize: 12}}>10:00 - 22:00</Text>
           </View>
         </View>
-        <Gap width={15} />
-      </TouchableOpacity>
+        {/* <Gap height={10}/>
+        <View style={{backgroundColor: COLORS.primary}}>
+          <Text style={{padding: 10, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 17}}>Waktu</Text>
+        </View>
+        <Gap height={10}/>
+        <View style={[Default.row, {justifyContent: 'space-between', padding: 10, width: width * 0.95, alignSelf: 'center'}]}>
+          <Icon name={'clock'} size={20} color={COLORS.primary}/>
+          <Text>10:00 - 22:00</Text>
+        </View> */}
+        <Gap height={20}/>
+      </View>
     </View>
   );
 
@@ -210,32 +226,6 @@ const InfoVanue = ({navigation}) => {
         />
       </View>
       <Gap height={10}/>
-      <View style={{backgroundColor: COLORS.primary}}>
-        <Text style={{padding: 10, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 17}}>Jam Buka</Text>
-      </View>
-      <Gap height={10}/>
-      <View style={[Default.row, {justifyContent: 'space-between', padding: 10, borderBottomWidth: 1, width: width * 0.95, alignSelf: 'center'}]}>
-        <Text>Senin</Text>
-        <Text>10:00 - 22:00</Text>
-      </View>
-      <View style={[Default.row, {justifyContent: 'space-between', padding: 10, borderBottomWidth: 1, width: width * 0.95, alignSelf: 'center'}]}>
-        <Text>Kamis</Text>
-        <Text>10:00 - 22:00</Text>
-      </View>
-      <View style={[Default.row, {justifyContent: 'space-between', padding: 10, borderBottomWidth: 1, width: width * 0.95, alignSelf: 'center'}]}>
-        <Text>Jum'at</Text>
-        <Text>07:00 - 22:00</Text>
-      </View>
-      <View style={[Default.row, {justifyContent: 'space-between', padding: 10, borderBottomWidth: 1, width: width * 0.95, alignSelf: 'center'}]}>
-        <Text>Sabtu</Text>
-        <Text>07:00 - 22:00</Text>
-      </View>
-      <View style={[Default.row, {justifyContent: 'space-between', padding: 10, borderBottomWidth: 1, width: width * 0.95, alignSelf: 'center'}]}>
-        <Text>Minggu</Text>
-        <Text>07:00 - 22:00</Text>
-      </View>
-      <Gap height={10}/>
-
       <View style={{width: width, height: height * 0.1, backgroundColor: COLORS.greyLight2, justifyContent: 'center', alignItems: 'center'}}>
        <View style={[Default.center, {position: 'absolute'}]}>
         <TouchableOpacity 
